@@ -1,14 +1,30 @@
-function candySalesToObject(array) {
+function candySalesToObject([item, price, quantity]) {
     return {
-        item: array[0],
-        price: array[1],
-        quantity: array[2]
+        item,
+        price: +price,
+        quantity,
     }
 }
 
+function salesDayToObject(date, salesDay) {
+    return {
+        date,
+        sales: salesDay[date].map(salesTuple => candySalesToObject(salesTuple))
+    }
+}
+
+function allSalesToArray(salesDates) {
+    return Object
+    .entries(salesDates)
+    .map(([date, salesDate]) => (
+        salesDayToObject(date, {
+            [date]: salesDate
+        })
+    ))
+}
 
 module.exports = {
     candySalesToObject,
-    //salesDayToObject,
-    //allSalesToArray
+    salesDayToObject,
+    allSalesToArray
 };
